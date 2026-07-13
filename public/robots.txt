@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.thecommunitymena.com
+
+# Sitemaps
+Sitemap: https://www.thecommunitymena.com/sitemap.xml
