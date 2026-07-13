@@ -9,10 +9,10 @@ import {
   defaultUtilityCTAs,
   recoveryUtilityCTAs,
   leadersUtilityCTAs,
-  siteConfig,
 } from "@/content/site";
 import CTAButton from "./CTAButton";
 import MobileMenu from "./MobileMenu";
+import Logo from "./Logo";
 
 function getUtilityCTAs(pathname: string) {
   if (pathname.startsWith("/departments/recovery")) return recoveryUtilityCTAs;
@@ -72,9 +72,8 @@ export default function Header() {
         )}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="font-heading text-xl font-bold text-navy-950">
-            {siteConfig.shortName}
-            <span className="text-gold-600"> Central</span>
+          <Link href="/" className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2">
+            <Logo />
           </Link>
 
           <nav className="hidden md:block" aria-label="Primary navigation">

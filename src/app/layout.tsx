@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { siteConfig } from "@/content/site";
 
 const inter = Inter({
@@ -58,6 +59,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <BackToTop />
+        <WhatsAppButton />
         {GA_MEASUREMENT_ID && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
       </body>
     </html>

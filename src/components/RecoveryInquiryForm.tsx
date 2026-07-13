@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { recoveryInquirySchema, RecoveryInquiryValues } from "@/lib/schemas";
+import { whatsappLink } from "@/content/site";
 import SubmitButton from "./SubmitButton";
 import FormStatus from "./FormStatus";
 import { inputClass } from "./formStyles";
@@ -15,12 +16,29 @@ const inquiryOptions: { value: RecoveryInquiryValues["inquiryType"]; label: stri
   { value: "general", label: "General Question" },
 ];
 
+function buildWhatsAppMessage(values: RecoveryInquiryValues) {
+  const inquiryLabel =
+    inquiryOptions.find((opt) => opt.value === values.inquiryType)?.label ?? values.inquiryType;
+
+  return [
+    "The Recovery House — Inquiry",
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.phone ? `Phone: ${values.phone}` : null,
+    `Reaching Out About: ${inquiryLabel}`,
+    "",
+    "Message:",
+    values.message,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+}
+
 export default function RecoveryInquiryForm() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "error">("idle");
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<RecoveryInquiryValues>({
     resolver: zodResolver(recoveryInquirySchema),
@@ -30,14 +48,13 @@ export default function RecoveryInquiryForm() {
   const onSubmit = async (values: RecoveryInquiryValues) => {
     setStatus("idle");
     try {
-      const res = await fetch("/api/recovery-inquiry", {
+      fetch("/api/recovery-inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-      });
-      if (!res.ok) throw new Error("Request failed");
-      setStatus("success");
-      reset();
+      }).catch(() => {});
+
+      window.location.assign(whatsappLink(buildWhatsAppMessage(values)));
     } catch {
       setStatus("error");
     }
@@ -119,15 +136,12 @@ export default function RecoveryInquiryForm() {
       </div>
 
       <SubmitButton isSubmitting={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Submit Inquiry"}
+        {isSubmitting ? "Opening WhatsApp..." : "Submit Inquiry"}
       </SubmitButton>
+      <p className="text-xs text-charcoal-700/70">
+        You&apos;ll be redirected to WhatsApp to send this directly to our team.
+      </p>
 
-      {status === "success" && (
-        <FormStatus
-          status="success"
-          successMessage="Thank you! Our team will be in touch soon."
-        />
-      )}
       {status === "error" && <FormStatus status="error" />}
     </form>
   );

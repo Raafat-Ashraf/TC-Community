@@ -1,17 +1,27 @@
 import Link from "next/link";
-import { siteConfig, socialLinks, footerQuickLinks } from "@/content/site";
+import { siteConfig, socialLinks, footerQuickLinks, whatsappLink } from "@/content/site";
 import NewsletterForm from "./NewsletterForm";
-import SocialIcon from "./SocialIcon";
+import SocialIcon, { WhatsAppIcon } from "./SocialIcon";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
     <footer className="bg-navy-950 text-cream-100">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <h3 className="font-heading text-lg font-bold text-white">{siteConfig.shortName}</h3>
-          <p className="mt-3 text-sm text-cream-100/80">{siteConfig.address}</p>
+          <Logo theme="light" />
+          <p className="mt-4 text-sm text-cream-100/80">{siteConfig.address}</p>
           <p className="mt-1 text-sm text-cream-100/80">{siteConfig.phone}</p>
           <p className="mt-1 text-sm text-cream-100/80">{siteConfig.email}</p>
+          <a
+            href={whatsappLink("Hello! I'd like to get in touch with The Community.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1.5 text-sm text-cream-100/80 hover:text-gold-300"
+          >
+            <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+            {siteConfig.whatsapp.display}
+          </a>
           <p className="mt-3 text-sm text-cream-100/60">{siteConfig.hours}</p>
         </div>
 

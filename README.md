@@ -86,14 +86,21 @@ No changes to `Header`, `Footer`, or shared components are required.
 
 ## Forms & Email
 
-Three forms (`Contact`, `100 Leaders — Get Involved`, `Recovery inquiry`) plus the footer
-newsletter signup use `react-hook-form` + `zod` and POST to matching routes under `src/app/api/`.
-Each route validates with the schema in `src/lib/schemas.ts` and calls `sendEmail()` in
-`src/lib/sendEmail.ts`, which currently only `console.log`s the submission.
+Four forms (`Contact`, `100 Leaders — Get Involved`, `Recovery inquiry`, plus the footer
+newsletter signup) use `react-hook-form` + `zod` and validate against the schemas in
+`src/lib/schemas.ts`.
 
-**To wire up real email**, replace the body of `sendEmail()` with a real provider call (Resend,
-SendGrid, SMTP via nodemailer, etc.) — the function signature and every call site already pass
-through subject + structured data, so no route changes are needed.
+The three inquiry-style forms (`Contact`, `100 Leaders — Get Involved`, `Recovery inquiry`) send a
+fire-and-forget POST to their matching route under `src/app/api/` for record-keeping (each route
+calls `sendEmail()` in `src/lib/sendEmail.ts`, which currently only `console.log`s the submission),
+then redirect the browser to `wa.me/<number>` (see `whatsappLink()` in `src/content/site.ts`) with
+the form data pre-filled as the message text — that WhatsApp chat is the actual delivery channel
+today. The newsletter form is unaffected and still relies solely on the `/api/newsletter` stub.
+
+**To wire up real email** (in addition to or instead of the WhatsApp redirect), replace the body of
+`sendEmail()` with a real provider call (Resend, SendGrid, SMTP via nodemailer, etc.) — the function
+signature and every call site already pass through subject + structured data, so no route changes
+are needed. To change the WhatsApp number, edit `siteConfig.whatsapp` in `src/content/site.ts`.
 
 ## CMS Migration Path
 

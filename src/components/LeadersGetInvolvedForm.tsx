@@ -4,16 +4,27 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { leadersGetInvolvedSchema, LeadersGetInvolvedValues } from "@/lib/schemas";
+import { whatsappLink } from "@/content/site";
 import SubmitButton from "./SubmitButton";
 import FormStatus from "./FormStatus";
 import { inputClass } from "./formStyles";
 
+function buildWhatsAppMessage(values: LeadersGetInvolvedValues) {
+  return [
+    "100 Leaders — Get Involved",
+    `Name: ${values.firstName} ${values.lastName}`,
+    `Email: ${values.email}`,
+    "",
+    "Message:",
+    values.message,
+  ].join("\n");
+}
+
 export default function LeadersGetInvolvedForm() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "error">("idle");
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<LeadersGetInvolvedValues>({
     resolver: zodResolver(leadersGetInvolvedSchema),
@@ -23,14 +34,13 @@ export default function LeadersGetInvolvedForm() {
   const onSubmit = async (values: LeadersGetInvolvedValues) => {
     setStatus("idle");
     try {
-      const res = await fetch("/api/leaders-signup", {
+      fetch("/api/leaders-signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-      });
-      if (!res.ok) throw new Error("Request failed");
-      setStatus("success");
-      reset();
+      }).catch(() => {});
+
+      window.location.assign(whatsappLink(buildWhatsAppMessage(values)));
     } catch {
       setStatus("error");
     }
@@ -101,15 +111,12 @@ export default function LeadersGetInvolvedForm() {
       </div>
 
       <SubmitButton isSubmitting={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Get Involved"}
+        {isSubmitting ? "Opening WhatsApp..." : "Get Involved"}
       </SubmitButton>
+      <p className="text-xs text-charcoal-700/70">
+        You&apos;ll be redirected to WhatsApp to send this directly to our team.
+      </p>
 
-      {status === "success" && (
-        <FormStatus
-          status="success"
-          successMessage="Thank you! Our team will follow up with you soon."
-        />
-      )}
       {status === "error" && <FormStatus status="error" />}
     </form>
   );

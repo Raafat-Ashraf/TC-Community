@@ -12,7 +12,17 @@ export const siteConfig = {
   phone: "+20 100 000 0000",
   address: "Cairo, Egypt",
   hours: "Sunday – Thursday, 9:00 AM – 5:00 PM",
+  whatsapp: {
+    display: "+20 12 7318 8267",
+    /** Digits only, international format, no leading + — as required by wa.me links. */
+    number: "201273188267",
+  },
 };
+
+export function whatsappLink(message?: string) {
+  const base = `https://wa.me/${siteConfig.whatsapp.number}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
 
 export const primaryNav: NavLink[] = [
   { label: "Home", href: "/" },

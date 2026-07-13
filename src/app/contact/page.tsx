@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Hero from "@/components/Hero";
 import ContactForm from "@/components/ContactForm";
-import SocialIcon from "@/components/SocialIcon";
+import SocialIcon, { WhatsAppIcon } from "@/components/SocialIcon";
 import RevealOnScroll from "@/components/RevealOnScroll";
-import { siteConfig, socialLinks } from "@/content/site";
+import { siteConfig, socialLinks, whatsappLink } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -35,6 +35,22 @@ export default function ContactPage() {
                 <p className="mt-1 text-charcoal-700">{siteConfig.phone}</p>
                 <p className="mt-1 text-charcoal-700">{siteConfig.email}</p>
                 <p className="mt-1 text-sm text-charcoal-700/70">{siteConfig.hours}</p>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold text-navy-950">Chat on WhatsApp</h2>
+                <p className="mt-2 text-charcoal-700">
+                  For a quicker response, message us directly.
+                </p>
+                <a
+                  href={whatsappLink("Hello! I'd like to get in touch with The Community.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                >
+                  <WhatsAppIcon className="h-4 w-4" />
+                  {siteConfig.whatsapp.display}
+                </a>
               </div>
 
               <div>

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink, UtilityCTA } from "@/lib/types";
 import CTAButton from "./CTAButton";
+import { LogoMark } from "./Logo";
 
 interface MobileMenuProps {
   open: boolean;
@@ -38,7 +39,7 @@ export default function MobileMenu({ open, onClose, links, utilityCTAs }: Mobile
             aria-label="Mobile navigation"
           >
             <div className="mb-8 flex items-center justify-between">
-              <span className="font-heading text-lg font-bold text-navy-950">Menu</span>
+              <LogoMark className="h-8 w-8" />
               <button
                 type="button"
                 onClick={onClose}

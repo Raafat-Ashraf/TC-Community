@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema, ContactFormValues } from "@/lib/schemas";
+import { whatsappLink } from "@/content/site";
 import SubmitButton from "./SubmitButton";
 import FormStatus from "./FormStatus";
 import { inputClass } from "./formStyles";
@@ -16,26 +17,44 @@ const departmentOptions = [
   { value: "partnership", label: "Partnership" },
 ];
 
+function buildWhatsAppMessage(values: ContactFormValues) {
+  const department =
+    departmentOptions.find((opt) => opt.value === values.department)?.label ?? values.department;
+
+  return [
+    "New Contact Form Submission",
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.phone ? `Phone: ${values.phone}` : null,
+    `Department: ${department}`,
+    "",
+    "Message:",
+    values.message,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+}
+
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "error">("idle");
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({ resolver: zodResolver(contactSchema) });
 
   const onSubmit = async (values: ContactFormValues) => {
     setStatus("idle");
     try {
-      const res = await fetch("/api/contact", {
+      // Log the submission for our own records; the WhatsApp redirect below is
+      // the actual delivery channel, so this call is fire-and-forget.
+      fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-      });
-      if (!res.ok) throw new Error("Request failed");
-      setStatus("success");
-      reset();
+      }).catch(() => {});
+
+      window.location.assign(whatsappLink(buildWhatsAppMessage(values)));
     } catch {
       setStatus("error");
     }
@@ -121,15 +140,12 @@ export default function ContactForm() {
       </div>
 
       <SubmitButton isSubmitting={isSubmitting}>
-        {isSubmitting ? "Sending..." : "Send Message"}
+        {isSubmitting ? "Opening WhatsApp..." : "Send Message"}
       </SubmitButton>
+      <p className="text-xs text-charcoal-700/70">
+        You&apos;ll be redirected to WhatsApp to send this message directly to our team.
+      </p>
 
-      {status === "success" && (
-        <FormStatus
-          status="success"
-          successMessage="Thank you! Your message has been sent — we'll be in touch soon."
-        />
-      )}
       {status === "error" && <FormStatus status="error" />}
     </form>
   );
