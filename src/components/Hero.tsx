@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 import CTAButton from "./CTAButton";
@@ -19,6 +20,7 @@ interface HeroProps {
   secondaryCta?: HeroCta;
   size?: "lg" | "md";
   imageSrc?: string;
+  imageAlt?: string;
 }
 
 const container = {
@@ -42,6 +44,7 @@ export default function Hero({
   secondaryCta,
   size = "lg",
   imageSrc,
+  imageAlt = "",
 }: HeroProps) {
   return (
     <section
@@ -51,14 +54,20 @@ export default function Hero({
       )}
     >
       {imageSrc && (
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: `url(${imageSrc})` }}
-          aria-hidden="true"
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-45"
         />
       )}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-900/95 to-navy-800/90"
+        className={clsx(
+          "absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-900/90 to-navy-800/85",
+          imageSrc && "from-navy-950/95 via-navy-950/80 to-navy-900/70"
+        )}
         aria-hidden="true"
       />
 
@@ -71,15 +80,17 @@ export default function Hero({
         className="pointer-events-none absolute -bottom-40 -right-24 h-96 w-96 rounded-full bg-gold-400/10 blur-3xl"
         aria-hidden="true"
       />
-      {/* Subtle dot grid texture */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-        aria-hidden="true"
-      />
+      {/* Subtle dot grid texture (skipped when a photo is present, to avoid visual noise) */}
+      {!imageSrc && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+          aria-hidden="true"
+        />
+      )}
       {/* Bottom edge fade into page */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/20 to-transparent"

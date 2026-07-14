@@ -19,6 +19,7 @@ import {
   closingBanner,
 } from "@/content/home";
 import { newsItems } from "@/content/news";
+import { heroImages, contentImages } from "@/content/images";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -38,6 +39,8 @@ export default function HomePage() {
         subhead={homeHero.subhead}
         primaryCta={homeHero.primaryCta}
         secondaryCta={homeHero.secondaryCta}
+        imageSrc={heroImages.home.src}
+        imageAlt={heroImages.home.alt}
       />
 
       {/* About The Community */}
@@ -50,12 +53,26 @@ export default function HomePage() {
                 <p key={p}>{p}</p>
               ))}
             </div>
-            <blockquote className="mx-auto mt-10 max-w-2xl rounded-2xl border-l-4 border-gold-500 bg-cream-100 p-6 text-center italic text-navy-950">
-              <p>&ldquo;{homeAbout.scripture.text}&rdquo;</p>
-              <footer className="mt-3 text-sm font-semibold not-italic text-gold-600">
-                {homeAbout.scripture.reference}
-              </footer>
-            </blockquote>
+          </RevealOnScroll>
+
+          <RevealOnScroll delay={0.1}>
+            <div className="mx-auto mt-10 grid max-w-4xl items-center gap-0 overflow-hidden rounded-2xl border border-cream-200 sm:grid-cols-5">
+              <div className="relative h-56 sm:col-span-2 sm:h-full">
+                <Image
+                  src={contentImages.scriptureCross.src}
+                  alt={contentImages.scriptureCross.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+              <blockquote className="bg-cream-100 p-8 text-center italic text-navy-950 sm:col-span-3 sm:text-left">
+                <p>&ldquo;{homeAbout.scripture.text}&rdquo;</p>
+                <footer className="mt-3 text-sm font-semibold not-italic text-gold-600">
+                  {homeAbout.scripture.reference}
+                </footer>
+              </blockquote>
+            </div>
             <div className="mt-8 text-center">
               <CTAButton href={homeAbout.cta.href} variant="ghost">
                 {homeAbout.cta.label}

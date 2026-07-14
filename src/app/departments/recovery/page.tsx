@@ -13,6 +13,7 @@ import {
   nextSteps,
   joinCommunityBand,
 } from "@/content/recovery";
+import { heroImages } from "@/content/images";
 
 export const metadata: Metadata = {
   title: "The Recovery House",
@@ -29,6 +30,8 @@ export default function RecoveryPage() {
         subhead={recoveryHero.subhead}
         primaryCta={recoveryHero.primaryCta}
         secondaryCta={recoveryHero.secondaryCta}
+        imageSrc={heroImages.recovery.src}
+        imageAlt={heroImages.recovery.alt}
       >
         <blockquote className="mx-auto mt-8 max-w-xl italic text-gold-300">
           &ldquo;{recoveryHero.quote}&rdquo;

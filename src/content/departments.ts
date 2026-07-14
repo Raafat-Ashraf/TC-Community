@@ -1,4 +1,5 @@
 import { CardItem } from "@/lib/types";
+import { ministryAreaImages } from "@/content/images";
 
 export const departmentsHero = {
   headline: "Our Departments",
@@ -29,29 +30,34 @@ export const ministryAreaCards: CardItem[] = [
     description: "Discipleship and spiritual growth that roots young adults in the truth of the gospel.",
     href: "/departments",
     comingSoon: true,
+    image: ministryAreaImages["Spiritual Formation"],
   },
   {
     title: "Emotional and Physical Empowerment",
     description: "Holistic care that restores emotional health and physical wellbeing.",
     href: "/departments",
     comingSoon: true,
+    image: ministryAreaImages["Emotional and Physical Empowerment"],
   },
   {
     title: "Work and Faith",
     description: "Equipping believers to integrate faith with vocation, work, and economic empowerment.",
     href: "/departments",
     comingSoon: true,
+    image: ministryAreaImages["Work and Faith"],
   },
   {
     title: "Leadership Development",
     description: "Raising up and multiplying local church leaders across Egypt and the region.",
     href: "/departments",
     comingSoon: true,
+    image: ministryAreaImages["Leadership Development"],
   },
   {
     title: "Online Ministry",
     description: "Reaching young adults with the gospel through digital platforms and online community.",
     href: "/departments",
     comingSoon: true,
+    image: ministryAreaImages["Online Ministry"],
   },
 ];

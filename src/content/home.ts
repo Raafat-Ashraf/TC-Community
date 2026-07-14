@@ -1,4 +1,5 @@
 import { CardItem, StatItem, Testimonial } from "@/lib/types";
+import { ministryAreaCards } from "@/content/departments";
 
 export const homeHero = {
   headline: "Restoring the Community to the Kingdom of God",
@@ -20,38 +21,8 @@ export const homeAbout = {
   cta: { label: "Read Our Full Story", href: "/about" },
 };
 
-export const ministryAreas: CardItem[] = [
-  {
-    title: "Spiritual Formation",
-    description: "Discipleship and spiritual growth that roots young adults in the truth of the gospel.",
-    href: "/departments",
-    comingSoon: true,
-  },
-  {
-    title: "Emotional and Physical Empowerment",
-    description: "Holistic care that restores emotional health and physical wellbeing.",
-    href: "/departments",
-    comingSoon: true,
-  },
-  {
-    title: "Work and Faith",
-    description: "Equipping believers to integrate faith with vocation, work, and economic empowerment.",
-    href: "/departments",
-    comingSoon: true,
-  },
-  {
-    title: "Leadership Development",
-    description: "Raising up and multiplying local church leaders across Egypt and the region.",
-    href: "/departments",
-    comingSoon: true,
-  },
-  {
-    title: "Online Ministry",
-    description: "Reaching young adults with the gospel through digital platforms and online community.",
-    href: "/departments",
-    comingSoon: true,
-  },
-];
+// Same five ministry-area cards shown on the Departments index page.
+export const ministryAreas: CardItem[] = ministryAreaCards;
 
 export const featuredDepartments: CardItem[] = [
   {

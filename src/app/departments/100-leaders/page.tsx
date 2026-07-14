@@ -20,6 +20,7 @@ import {
   leadersFAQs,
   getInvolvedIntro,
 } from "@/content/leaders";
+import { heroImages } from "@/content/images";
 
 export const metadata: Metadata = {
   title: "100 Leaders",
@@ -36,6 +37,8 @@ export default function LeadersPage() {
         subhead={leadersHero.subhead}
         primaryCta={leadersHero.primaryCta}
         secondaryCta={leadersHero.secondaryCta}
+        imageSrc={heroImages.leaders.src}
+        imageAlt={heroImages.leaders.alt}
       />
 
       {/* Program Overview */}

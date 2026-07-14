@@ -13,6 +13,7 @@ import {
   staffTeam,
   partners,
 } from "@/content/about";
+import { heroImages } from "@/content/images";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -33,7 +34,13 @@ function initials(name: string) {
 export default function AboutPage() {
   return (
     <>
-      <Hero headline={aboutHero.headline} subhead={aboutHero.subhead} size="md" />
+      <Hero
+        headline={aboutHero.headline}
+        subhead={aboutHero.subhead}
+        size="md"
+        imageSrc={heroImages.about.src}
+        imageAlt={heroImages.about.alt}
+      />
 
       {/* Our Story */}
       <section className="bg-white py-16 sm:py-24">

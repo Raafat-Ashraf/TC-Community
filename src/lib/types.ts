@@ -38,6 +38,7 @@ export interface CardItem {
   ctaLabel?: string;
   icon?: string;
   comingSoon?: boolean;
+  image?: { src: string; alt: string };
 }
 
 export interface GalleryImage {
